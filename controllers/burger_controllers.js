@@ -19,7 +19,7 @@ router.get("/", function (req, res) {
     });
 });
 
-router.post("/burgers", function (req, res) {
+router.post("/", function (req, res) {
     burger.insertOne([
         "burger_name"
     ], [
@@ -30,21 +30,27 @@ router.post("/burgers", function (req, res) {
         });
 });
 
-router.put("/burgers/:id", function (req, res) {
+
+// HAVING AN ISSUE WITH PUT METHOD
+router.put("/:id", function (req, res) {
     var condition = "id = " + req.params.id;
 
+
+    // I DONT THINK ITS LOGGING
     console.log("condition", condition);
 
     burger.updateOne({
         devoured: true
-    }, condition, function (data) {
-        res.redirect('/');
-        // if (result.changedRows == 0) {
-        //     // If no rows were changed, then the ID must not exist, so 404
-        //     return res.status(404).end();
-        // } else {
-        //     res.status(200).end();
-        // }
+    }, condition, function (result) {
+
+        if (result.changedRows == 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+        } else {
+            
+            res.redirect('/');
+            res.status(200).end();
+        }
     });
 });
 
