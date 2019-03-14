@@ -1,6 +1,6 @@
 var express = require("express");
 
-var PORT = process.env.JAWS_DB || 3000;
+var PORT = process.env.JAWSDB_URL || 3000;
 
 var app = express();
 
